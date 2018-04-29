@@ -10,8 +10,15 @@ using std::min;
 using std::copy;
 
 template<typename T>
-void ChangeSize1D(T*& array,const int oldSize, const int newSize);
+void ChangeSize1D(T*& array,const int oldSize, const int newSize){
+	T* temp=new T[newSize];
+	int number=min(oldSize,newSize);
+	copy(array,array+number,temp);
+	delete [] array;
+	array = temp;
+}
 
+//Bag
 template<typename T>
 class Bag{
 
@@ -20,63 +27,37 @@ class Bag{
 	int top; //가장 최근 인덱스
 
 public:
-	Bag();//생성자
-	Bag(int bagCapacity); //생성자 오버로딩
-	~Bag(); //소멸자
-
-	int Size() const; //bag안에 요소 개수 리턴
-	bool isEmpty() const; //bag 이 비었으면 true
-	T& Element() const; //bag안의 요소를 리턴
-
-	void Push(const T&); //bag에 정수 넣기
-	void Pop(); //bag에서 정수 꺼내기
+	Bag()//생성자
+	{	
+		array = new T[capacity];
+		top=-1;
+	}
+	Bag(int bagCapacity) :capacity(bagCapacity){this();}//생성자 오버로딩
+	~Bag() {delete[] array;}//소멸자
+	
+	inline int Size() const {return top+1;}//bag안에 요소 개수 리턴
+	
+	inline bool isEmpty() const {return Size() == 0;}//bag 이 비었으면 true
+	
+	inline T& Element() const //bag안의 요소를 리턴
+	{
+		if(isEmpty()) throw "Bag is Empty";
+		return array[rand()%Size()];
+	}
+	void Push(const T& x) //bag에 정수 넣기
+	{
+		if(capacity == top+1) ChangeSize1D(array,capacity,2*capacity); //꽉찼으면 2배로 늘리기
+		capacity *=2;
+		array[++top] = x;
+	}
+	void Pop() //bag에서 정수 꺼내기
+	{
+		int deletePos=rand()%Size();
+		if(deletePos != top)
+			copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
+		array[--top].~T();//하나 삭제되서
+	}
 };
-
-template<typename T>
-Bag<T>::Bag(){
-	array = new T[capacity];
-	top=-1;
-}
-template<typename T>
-Bag<T>::Bag(int bagCapacity):capacity(bagCapacity){
-	array = new T[capacity];
-	top=-1;
-}
-template<typename T>
-Bag<T>::~Bag() {
-	delete[] array;
-}
-template<typename T>
-inline int Bag<T>::Size() const {return top+1;}
-template<typename T>
-inline bool Bag<T>::isEmpty() const {return Size() == 0;}
-template<typename T>
-inline T& Bag<T>::Element() const {
-	if(isEmpty()) throw "Bag is Empty";
-	return array[rand()%Size()];
-}
-template<typename T>
-void Bag<T>::Push(const T& x){
-	if(capacity == top+1) ChangeSize1D(array,capacity,2*capacity); //꽉찼으면 2배로 늘리기
-	capacity *=2;
-	array[++top] = x;
-}
-template<typename T>
-void Bag<T>::Pop(){
-	int deletePos=rand()%Size();
-	if(deletePos != top)
-		copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
-	array[--top].~T();//하나 삭제되서
-}
-
-template<class T>
-void ChangeSize1D(T*& array,const int oldSize, const int newSize){
-	T* temp=new T[newSize];
-	int number=min(oldSize,newSize);
-	copy(array,array+number,temp);
-	delete [] array;
-	array = temp;
-}
 
 //Bizcard
 class Bizcard {
