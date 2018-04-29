@@ -82,30 +82,10 @@ void showInfo();//이름과 전화번호 출력
 /************************* main() **************************/
 
 int main(void){
-	/************ test ***************
-	Bizcard myCard("hyebeen","010");
-	Bizcard copyCard(myCard);
-	Bizcard yourCard("so","5507");
-	myCard.showInfo();
-	copyCard.showInfo();
-	yourCard.showInfo();
 
-	//myCard.setName("hello");
-	myCard.showInfo();
-	copyCard.showInfo();
-	yourCard.showInfo();
-
-	copyCard=yourCard;
-	myCard.showInfo();
-	copyCard.showInfo();
-	yourCard.showInfo();
-	************************************/
 	Bag <Bizcard>BizBag();
 	Bizcard* A = new Bizcard("so","010");
 	BizBag.Push(A);
-
-
-
 
 	return 0;
 }
@@ -143,6 +123,4 @@ void Bizcard::showInfo(){
 	cout<<"name : "<<name<<endl;
 	cout<<"phone : "<<phone<<endl;
 }
-
-/************************* Bag 정의부 **************************/
 
