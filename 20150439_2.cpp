@@ -59,9 +59,11 @@ public:
 	void Pop() //bag에서 꺼내기
 	{
 		int deletePos=rand()%Size();
+		cout<<"deletePos : "<<deletePos<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 		if(deletePos != top)
 			copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
-		array[--top].~T();//하나 삭제되서
+		//array[top--].~T();//하나 삭제되서
+		cout<<"top : "<<top<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	}
 };
 
@@ -156,6 +158,8 @@ int main(void){
 	cout<<"Size() : "<<BizBag.Size()<<endl;
 	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
 	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
+
+	cout<<"끝!"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 
 
 	return 0;
