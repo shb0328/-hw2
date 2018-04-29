@@ -77,11 +77,14 @@ void setPointerField(char*& field, const char* input){
 }
 
 public:
-Bizcard() {} //초기화 생성자
+Bizcard() {cout<<"초기화 생성자 사용!"<<endl;} //초기화 생성자
 Bizcard(const char* name, const char* phone) //초기화 생성자 오버로딩
 {
-	setPointerField(this->name,name);
-	setPointerField(this->phone,phone);
+	this->name=new char[strlen(name)+1];
+	strcpy(this->name,name);
+	this->phone=new char[strlen(phone)+1];
+	strcpy(this->phone,phone);
+	cout<<"오버로딩된 초기화 생성자 사용!"<<endl;
 }
 ~Bizcard()//소멸자
 {
@@ -91,8 +94,11 @@ Bizcard(const char* name, const char* phone) //초기화 생성자 오버로딩
 }
 Bizcard(const Bizcard& copy) //복사 생성자
 {
-	setPointerField(this->name,copy.name);
-	setPointerField(this->phone,copy.phone);
+	name=new char[strlen(copy.name)+1];
+	strcpy(name,copy.name);
+	phone=new char[strlen(copy.phone)+1];
+	strcpy(phone,copy.phone);
+	cout<<"복사 생성자 사용"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 }
 
 Bizcard& operator=(const Bizcard& copy) //대입 연산자
