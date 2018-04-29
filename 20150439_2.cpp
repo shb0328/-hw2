@@ -65,7 +65,7 @@ class Bizcard {
 char* name;
 char* phone;
 
-void FieldInitializer(char*& field, const char* input){
+void setPointerField(char*& field, const char* input){
 	field=new char[strlen(input)+1];
 	strcpy(field,input);
 }
@@ -74,8 +74,8 @@ public:
 Bizcard() {} //초기화 생성자
 Bizcard(const char* name, const char* phone) //초기화 생성자 오버로딩
 {
-	FieldInitializer(this->name,name);
-	FieldInitializer(this->phone,phone);
+	setPointerField(this->name,name);
+	setPointerField(this->phone,phone);
 }
 ~Bizcard()//소멸자
 {
@@ -85,15 +85,15 @@ Bizcard(const char* name, const char* phone) //초기화 생성자 오버로딩
 }
 Bizcard(const Bizcard& copy) //복사 생성자
 {
-	FieldInitializer(this->name,copy.name);
-	FieldInitializer(this->phone,copy.phone);
+	setPointerField(this->name,copy.name);
+	setPointerField(this->phone,copy.phone);
 }
 
 Bizcard& operator=(const Bizcard& copy) //대입 연산자
 {
 	delete [] name;
-	FieldInitializer(this->name,copy.name);
-	FieldInitializer(this->phone,copy.phone);
+	setPointerField(this->name,copy.name);
+	setPointerField(this->phone,copy.phone);
 	return *this;
 }
 
