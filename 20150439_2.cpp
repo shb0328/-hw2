@@ -71,8 +71,8 @@ void FieldInitializer(char*& field, const char* input){
 }
 
 public:
-
-Bizcard(const char* name, const char* phone) //초기화 생성자
+Bizcard() {} //초기화 생성자
+Bizcard(const char* name, const char* phone) //초기화 생성자 오버로딩
 {
 	FieldInitializer(this->name,name);
 	FieldInitializer(this->phone,phone);
