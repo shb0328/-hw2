@@ -12,9 +12,13 @@ using std::copy;
 template<typename T>
 void ChangeSize1D(T*& array,const int oldSize, const int newSize){
 	T* temp=new T[newSize];
+	cout<<"temp 생성 !"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	int number=min(oldSize,newSize);
-	copy(array,array+number,temp);
-	delete [] array;
+	temp = copy(array,array+number,temp);
+	cout<<"copy 성공 ! "<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
+	temp[0].showInfo();//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
+	//error 복사가 제대로 안됬나?
+	delete[] array;
 	array = temp;
 }
 
@@ -46,15 +50,17 @@ public:
 	}
 	void Push(const T& x) //bag에 넣기
 	{
-		if(capacity == top+1) ChangeSize1D(array,capacity,2*capacity); //꽉찼으면 2배로 늘리기
-		capacity *=2;
+		if(capacity == (top+1)) {//꽉찼으면 2배로 늘리기
+			ChangeSize1D(array,capacity,2*capacity);
+			capacity *=2;
+		}
 		array[++top] = x;
 	}
 	void Pop() //bag에서 꺼내기
 	{
 		int deletePos=rand()%Size();
 		if(deletePos != top)
-			copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
+			array=copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
 		array[--top].~T();//하나 삭제되서
 	}
 };
@@ -91,9 +97,12 @@ Bizcard(const Bizcard& copy) //복사 생성자
 
 Bizcard& operator=(const Bizcard& copy) //대입 연산자
 {
-	delete [] name;
+	delete[] name;
+	delete[] phone;
 	setPointerField(this->name,copy.name);
+	cout<<name<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	setPointerField(this->phone,copy.phone);
+	cout<<"=사용"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	return *this;
 }
 
@@ -110,6 +119,12 @@ void showInfo()//이름과 전화번호 출력
 int main(void){
 
 	Bag<Bizcard> BizBag;
+	// Bizcard So("so","010");
+	// Bizcard Hye("hye","5507");
+	// Bizcard Bin("bin","4148");
+	// BizBag.Push(So);
+	// BizBag.Push(Hye);
+	// BizBag.Push(Bin);
 	BizBag.Push(Bizcard("so","010"));
 	BizBag.Push(Bizcard("hye","5507"));
 	BizBag.Push(Bizcard("bin","4148"));
@@ -118,6 +133,14 @@ int main(void){
 	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
 	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
 	
+	// Bizcard Kim("kim","02");
+	// Bizcard Ik("ik","820");
+	// Bizcard Su("su","0926");
+	// Bizcard Plorer("plorer","1004");
+	// BizBag.Push(Kim);
+	// BizBag.Push(Ik);
+	// BizBag.Push(Su);
+	// BizBag.Push(Plorer);
 	BizBag.Push(Bizcard("kim","02"));
 	BizBag.Push(Bizcard("ik","820"));
 	BizBag.Push(Bizcard("su","0926"));
