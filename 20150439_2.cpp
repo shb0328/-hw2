@@ -14,7 +14,7 @@ void ChangeSize1D(T*& array,const int oldSize, const int newSize){
 	T* temp=new T[newSize];
 	cout<<"temp 생성 !"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	int number=min(oldSize,newSize);
-	temp = copy(array,array+number,temp);
+	copy(array,array+number,temp);
 	cout<<"copy 성공 ! "<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	temp[0].showInfo();//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	//error 복사가 제대로 안됬나?
@@ -60,7 +60,7 @@ public:
 	{
 		int deletePos=rand()%Size();
 		if(deletePos != top)
-			array=copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
+			copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
 		array[--top].~T();//하나 삭제되서
 	}
 };
