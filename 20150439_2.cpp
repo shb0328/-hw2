@@ -35,11 +35,11 @@ public:
 	}
 	~Bag() {delete[] array;}//소멸자
 	
-	inline int Size() const {return top+1;}//bag안에 요소 개수 리턴
+	int Size() const {return top+1;}//bag안에 요소 개수 리턴
 	
-	inline bool isEmpty() const {return Size() == 0;}//bag 이 비었으면 true
+	bool isEmpty() const {return Size() == 0;}//bag 이 비었으면 true
 	
-	inline T& Element() const //bag안의 요소를 리턴
+	T& Element() const //bag안의 요소를 리턴
 	{
 		if(isEmpty()) throw "Bag is Empty";
 		return array[rand()%Size()];
@@ -109,10 +109,31 @@ void showInfo()//이름과 전화번호 출력
 
 int main(void){
 
-	Bag<Bizcard> BizBag(3);
-	Bizcard A("so","010");
-	A.showInfo();
-	//BizBag.Element(A).showInfo();
+	Bag<Bizcard> BizBag;
+	BizBag.Push(Bizcard("so","010"));
+	BizBag.Push(Bizcard("hye","5507"));
+	BizBag.Push(Bizcard("bin","4148"));
+	cout<<"===== 객체 3개 추가 후 결과 확인 ====="<<endl;
+	cout<<"Size() : "<<BizBag.Size()<<endl;
+	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
+	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
+	
+	BizBag.Push(Bizcard("kim","02"));
+	BizBag.Push(Bizcard("ik","820"));
+	BizBag.Push(Bizcard("su","0926"));
+	BizBag.Push(Bizcard("plorer","1004"));
+	cout<<"===== 객체 4개 추가 후 결과 확인 ====="<<endl;
+	cout<<"Size() : "<<BizBag.Size()<<endl;
+	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
+	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
+	
+	BizBag.Pop();
+	BizBag.Pop();
+	cout<<"===== 객체 2개 삭제 후 결과 확인 ====="<<endl;
+	cout<<"Size() : "<<BizBag.Size()<<endl;
+	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
+	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
+
 
 	return 0;
 }
