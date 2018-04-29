@@ -23,16 +23,16 @@ template<typename T>
 class Bag{
 
 	T* array; //용량 부족하면 1D 함수 호출하기 위해서
-	int capacity =3; //용량
+	int capacity; //용량
 	int top; //가장 최근 인덱스
 
 public:
-	Bag()//생성자
-	{	
+	Bag(int bagCapacity=3) :capacity(bagCapacity)//생성자 오버로딩
+	{
 		array = new T[capacity];
 		top=-1;
+		cout<<"Bag 생성"<<endl; //test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	}
-	Bag(int bagCapacity) :capacity(bagCapacity){this();}//생성자 오버로딩
 	~Bag() {delete[] array;}//소멸자
 	
 	inline int Size() const {return top+1;}//bag안에 요소 개수 리턴
@@ -44,13 +44,13 @@ public:
 		if(isEmpty()) throw "Bag is Empty";
 		return array[rand()%Size()];
 	}
-	void Push(const T& x) //bag에 정수 넣기
+	void Push(const T& x) //bag에 넣기
 	{
 		if(capacity == top+1) ChangeSize1D(array,capacity,2*capacity); //꽉찼으면 2배로 늘리기
 		capacity *=2;
 		array[++top] = x;
 	}
-	void Pop() //bag에서 정수 꺼내기
+	void Pop() //bag에서 꺼내기
 	{
 		int deletePos=rand()%Size();
 		if(deletePos != top)
@@ -65,17 +65,43 @@ class Bizcard {
 char* name;
 char* phone;
 
-void FieldInitializer(char*& field, const char* input);
+void FieldInitializer(char*& field, const char* input){
+	field=new char[strlen(input)+1];
+	strcpy(field,input);
+}
 
 public:
 
-Bizcard(const char* name, const char* phone); //초기화 생성자
-~Bizcard();//소멸자
-Bizcard(const Bizcard& copy); //복사 생성자
+Bizcard(const char* name, const char* phone) //초기화 생성자
+{
+	FieldInitializer(this->name,name);
+	FieldInitializer(this->phone,phone);
+}
+~Bizcard()//소멸자
+{
+	delete [] name;
+	delete [] phone;
+	cout<<"소멸자 호출"<<endl; //test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
+}
+Bizcard(const Bizcard& copy) //복사 생성자
+{
+	FieldInitializer(this->name,copy.name);
+	FieldInitializer(this->phone,copy.phone);
+}
 
-Bizcard& operator=(const Bizcard& copy); //대입 연산자
+Bizcard& operator=(const Bizcard& copy) //대입 연산자
+{
+	delete [] name;
+	FieldInitializer(this->name,copy.name);
+	FieldInitializer(this->phone,copy.phone);
+	return *this;
+}
 
-void showInfo();//이름과 전화번호 출력
+void showInfo()//이름과 전화번호 출력
+{
+	cout<<"name : "<<name<<endl;
+	cout<<"phone : "<<phone<<endl;
+}
 
 };
 
@@ -83,44 +109,12 @@ void showInfo();//이름과 전화번호 출력
 
 int main(void){
 
-	Bag <Bizcard>BizBag();
-	Bizcard* A = new Bizcard("so","010");
-	BizBag.Push(A);
+	Bag<Bizcard> BizBag(3);
+	Bizcard A("so","010");
+	A.showInfo();
+	//BizBag.Element(A).showInfo();
 
 	return 0;
 }
 
-/*********************** Bizcard 정의부 ************************/
-
-void Bizcard::FieldInitializer(char*& field, const char* input){
-	field=new char[strlen(input)+1];
-	strcpy(field,input);
-}
-
-Bizcard::Bizcard(const char* name, const char* phone) //초기화 생성자
-{
-	FieldInitializer(this->name,name);
-	FieldInitializer(this->phone,phone);
-}
-Bizcard::~Bizcard(){//소멸자
-	delete [] name;
-	delete [] phone;
-	cout<<"소멸자 호출"<<endl;
-}
-Bizcard::Bizcard(const Bizcard& copy) //복사 생성자
-{
-	FieldInitializer(this->name,copy.name);
-	FieldInitializer(this->phone,copy.phone);
-}
-Bizcard& Bizcard::operator=(const Bizcard& copy) //대입 연산자
-{	
-	delete [] name;
-	FieldInitializer(this->name,copy.name);
-	FieldInitializer(this->phone,copy.phone);
-	return *this;
-}
-void Bizcard::showInfo(){
-	cout<<"name : "<<name<<endl;
-	cout<<"phone : "<<phone<<endl;
-}
 
