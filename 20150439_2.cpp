@@ -12,12 +12,8 @@ using std::copy;
 template<typename T>
 void ChangeSize1D(T*& array,const int oldSize, const int newSize){
 	T* temp=new T[newSize];
-	cout<<"temp 생성 !"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	int number=min(oldSize,newSize);
 	copy(array,array+number,temp);
-	cout<<"copy 성공 ! "<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
-	temp[0].showInfo();//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
-	//error 복사가 제대로 안됬나?
 	delete[] array;
 	array = temp;
 }
@@ -35,17 +31,17 @@ public:
 	{
 		array = new T[capacity];
 		top=-1;
-		cout<<"Bag 생성"<<endl; //test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	}
-	~Bag() {delete[] array;}//소멸자
+	~Bag() {delete[] array;	}//소멸자
 	
 	int Size() const {return top+1;}//bag안에 요소 개수 리턴
 	
 	bool isEmpty() const {return Size() == 0;}//bag 이 비었으면 true
 	
-	T& Element() const //bag안의 요소를 리턴
+	T& Element() const throw(char const*)//bag안의 요소를 리턴
 	{
-		if(isEmpty()) throw "Bag is Empty";
+		if(isEmpty()) 
+				throw "Bag is Empty";
 		return array[rand()%Size()];
 	}
 	void Push(const T& x) //bag에 넣기
@@ -58,12 +54,12 @@ public:
 	}
 	void Pop() //bag에서 꺼내기
 	{
+		if(isEmpty()) throw "Bag is empty, cannot delete";
 		int deletePos=rand()%Size();
-		cout<<"deletePos : "<<deletePos<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 		if(deletePos != top)
 			copy(array+deletePos+1,array+top+1,array+deletePos); //앞으로 땡기기
-		//array[top--].~T();//하나 삭제되서
-		cout<<"top : "<<top<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
+		array[top--].~T();//하나 삭제되서
+
 	}
 };
 
@@ -87,9 +83,25 @@ Bizcard(const char* name, const char* phone) //초기화 생성자 오버로딩
 }
 ~Bizcard()//소멸자
 {
-	delete [] name;
-	delete [] phone;
-	cout<<"소멸자 호출"<<endl; //test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
+	if(name!=NULL)
+
+	{
+
+	delete[] name;
+
+	name=NULL;
+
+	}
+
+	if(phone!=NULL)
+
+	{
+
+	delete[] phone;
+
+	phone=NULL;
+
+	}
 }
 Bizcard(const Bizcard& copy) //복사 생성자
 {
@@ -102,9 +114,7 @@ Bizcard& operator=(const Bizcard& copy) //대입 연산자
 	delete[] name;
 	delete[] phone;
 	setPointerField(this->name,copy.name);
-	cout<<name<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	setPointerField(this->phone,copy.phone);
-	cout<<"=사용"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
 	return *this;
 }
 
@@ -116,52 +126,68 @@ void showInfo()//이름과 전화번호 출력
 
 };
 
+
+
 /************************* main() **************************/
+
+
 
 int main(void){
 
 	Bag<Bizcard> BizBag;
-	// Bizcard So("so","010");
-	// Bizcard Hye("hye","5507");
-	// Bizcard Bin("bin","4148");
-	// BizBag.Push(So);
-	// BizBag.Push(Hye);
-	// BizBag.Push(Bin);
-	BizBag.Push(Bizcard("so","010"));
-	BizBag.Push(Bizcard("hye","5507"));
-	BizBag.Push(Bizcard("bin","4148"));
+
+	cout<<"===== 빈 Bag 결과 확인 ====="<<endl;
+	cout<<"Size() : "<<BizBag.Size()<<endl;
+	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
+	try{
+	cout<<"Element() : "<<endl; BizBag.Element().showInfo(); 
+	}catch(char const* e){
+		cout<<e<<endl;
+	}
+	// try{
+	// BizBag.Pop();
+	// }catch(char const* e){
+	// 	cout<<e<<endl;
+	// }
+
+	Bizcard So("so","010");
+	Bizcard Hye("hye","5507");
+	Bizcard Bin("bin","4148");
+	BizBag.Push(So);
+	BizBag.Push(Hye);
+	BizBag.Push(Bin);
+
 	cout<<"===== 객체 3개 추가 후 결과 확인 ====="<<endl;
 	cout<<"Size() : "<<BizBag.Size()<<endl;
 	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
 	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
 	
-	// Bizcard Kim("kim","02");
-	// Bizcard Ik("ik","820");
-	// Bizcard Su("su","0926");
-	// Bizcard Plorer("plorer","1004");
-	// BizBag.Push(Kim);
-	// BizBag.Push(Ik);
-	// BizBag.Push(Su);
-	// BizBag.Push(Plorer);
-	BizBag.Push(Bizcard("kim","02"));
-	BizBag.Push(Bizcard("ik","820"));
-	BizBag.Push(Bizcard("su","0926"));
-	BizBag.Push(Bizcard("plorer","1004"));
+	Bizcard Kim("kim","02");
+	Bizcard Ik("ik","820");
+	Bizcard Su("su","0926");
+	Bizcard Plorer("plorer","1004");
+	BizBag.Push(Kim);
+	BizBag.Push(Ik);
+	BizBag.Push(Su);
+	BizBag.Push(Plorer);
+
 	cout<<"===== 객체 4개 추가 후 결과 확인 ====="<<endl;
 	cout<<"Size() : "<<BizBag.Size()<<endl;
 	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
 	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
+
+	try{
+		BizBag.Pop();
+		BizBag.Pop();
+		cout<<"===== 객체 2개 삭제 후 결과 확인 ====="<<endl;
+		cout<<"Size() : "<<BizBag.Size()<<endl;
+		cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
+		cout<<"Element() : "<<endl; BizBag.Element().showInfo();
+
+	}catch(char const* e){
+		cout<<e<<endl;
+	}
 	
-	BizBag.Pop();
-	BizBag.Pop();
-	cout<<"===== 객체 2개 삭제 후 결과 확인 ====="<<endl;
-	cout<<"Size() : "<<BizBag.Size()<<endl;
-	cout<<"isEmpty() : "<<BizBag.isEmpty()<<endl;
-	cout<<"Element() : "<<endl; BizBag.Element().showInfo();
-
-	cout<<"끝!"<<endl;//test 용 코드 삭제 요망!!!!!!!!!!!!!!!!
-
-
 	return 0;
 }
 
