@@ -9,16 +9,18 @@ using std::string;
 
 
 
-class LOPChain {
+class SortProductList {
 
 				class LocationOfProduct {
 					public:
 						string product;
+						int row;
 						int location;
 						LocationOfProduct * next;
 
 						LocationOfProduct(string product, int row, int column){
 							this->product = product;
+							this->row = row;
 
 							if(row%2 == 0) 
 							location = row*5 + (column+1);
@@ -30,17 +32,24 @@ class LOPChain {
 						
 
 						void show(){ //test function
-							cout<<product<<" : "<<location<<endl;
+							cout<<"*product : "<<product<<endl;
+							cout<<"*line : "<<row<<endl;
+							cout<<"*location : "<<location<<endl<<endl;
 						}
 				};
 
 
 	LocationOfProduct * first;
 
-	void preInsert(LocationOfProduct* newNode, LocationOfProduct* node){
-		if(node){
-			newNode->next = node->next;
-			node->next = newNode;
+	void Insert(LocationOfProduct* newNode){
+		if(first){
+			for(LocationOfProduct* p=first;p!=0;p=p->next){
+			if ( p->next == 0 )
+				{
+					p->next = newNode;
+					break;
+				}
+			}
 		}
 		else
 			first = newNode;
@@ -49,54 +58,25 @@ class LOPChain {
 
 
 public:
-	LOPChain(){
+	SortProductList(){
 		first =0;
 	}
 
-	void sortProduct(string item,int row,int column) {
-		cout<<item<<endl;
-		if(first){
-			for(LocationOfProduct* p = first; p!=0;p=p->next){
-				cout<<"check1"<<endl;
+	void addSortProductList(string item,int row,int column) {
+
+			for(LocationOfProduct* p=first;p!=0;p=p->next)
+			{
 				if(0 == item.compare(p->product))
-				{
-					cout<<"check^^;"<<endl;
-					break;
-				}
-				else
-				{
-					cout<<"check**"<<endl;
-					LocationOfProduct* newNode = new LocationOfProduct(item,row,column);
-					LocationOfProduct* tmp = first;
-					for(LocationOfProduct* q = first; tmp!=0;q=q->next)
-					{
-						cout<<"check!!!!!!"<<endl;
-						if(tmp->location < newNode->location){
-							if(0 == q->next){
-								tmp->next = newNode;
-								break;
-							}
-						}	
-						else
-						{
-							cout<<"check@@@@@"<<endl;
-							preInsert(newNode,tmp);
-						}
-					tmp = q;
-					}
-				}
-			}		
-		}	
-		else
-		{
-			cout<<"check5"<<endl;
+					return;
+			}
 			LocationOfProduct* newNode = new LocationOfProduct(item,row,column);
-			preInsert(newNode,first);
-		}	
+			Insert(newNode);
+		
 	}
+
 	void show(){
 		for(LocationOfProduct* p = first;p!=0;p=p->next)
-			cout<<p->product<<" ";
+			p->show();
 		cout<<endl;
 	}
 };
@@ -110,7 +90,7 @@ int main(void) {
 										"chopsticks", "spoon", "fork", "cup", "knife",
 										"beer", "soju", "wine", "cocktail", "liquor" };
 
-	LOPChain* product = new LOPChain;
+	SortProductList* sortProductList = new SortProductList;
 										
 	int num;
 	cout << "장 볼 물건의 개수를 입력하세요 : ";
@@ -126,22 +106,38 @@ int main(void) {
 	int cnt[6] = {0};
 
 	for(int i=0;i<6;i++){
-		for(int j =0; j<5;j++){
-			for(int k =0;k<num;k++){													
-				if( 0 == list[k].compare(productList[i][j]) ){
-					++cnt[i]; 
-					product->sortProduct(list[k],i,j);
-				}
+		if(i%2 == 0)
+		{
+				for(int j =0; j<=4;j++){
+					for(int k =0;k<num;k++){													
+						if( 0 == list[k].compare(productList[i][j]) ){
+							++cnt[i]; 
+							sortProductList->addSortProductList(list[k],i,j);
+						}
+					}
+				
 			}
 		}
+		else
+		{
+			for(int j =4; j>=0;j--){
+				for(int k =0;k<num;k++){													
+					if( 0 == list[k].compare(productList[i][j]) ){
+						++cnt[i]; 
+						sortProductList->addSortProductList(list[k],i,j);
+					}
+				}
+		}
+}
 	}
 
+	cout<<endl<<"<line 당 사야할 물건 개수>"<<endl;
 	for(int i =0;i<6;i++)
-		cout<<cnt[i]<<" ";
+		cout<<" Line "<<i+1<<": "<<cnt[i]<<" 개"<<endl;
 	cout<<endl;
 	
-	cout<<"장 볼 순서 : ";
-	product->show();
+	cout<<"<장 볼 순서>"<<endl;
+	sortProductList->show();
 
 	return 0;
 }
