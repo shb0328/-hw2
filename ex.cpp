@@ -9,7 +9,7 @@ using std::string;
 
 
 
-class SortProductList {
+class SortedProductList {
 
 				class LocationOfProduct {
 					public:
@@ -21,13 +21,12 @@ class SortProductList {
 						LocationOfProduct(string product, int row, int column){
 							this->product = product;
 							this->row = row;
+							next = 0;
 
 							if(row%2 == 0) 
 							location = row*5 + (column+1);
 							else
 							location = row*5 + (5-column);
-
-							next = 0;
 						}
 						
 
@@ -58,11 +57,11 @@ class SortProductList {
 
 
 public:
-	SortProductList(){
+	SortedProductList(){
 		first =0;
 	}
 
-	void addSortProductList(string item,int row,int column) {
+	void addSortedProductList(string item,int row,int column) {
 
 			for(LocationOfProduct* p=first;p!=0;p=p->next)
 			{
@@ -90,7 +89,7 @@ int main(void) {
 										"chopsticks", "spoon", "fork", "cup", "knife",
 										"beer", "soju", "wine", "cocktail", "liquor" };
 
-	SortProductList* sortProductList = new SortProductList;
+	SortedProductList* sortedProductList = new SortedProductList;
 										
 	int num;
 	cout << "장 볼 물건의 개수를 입력하세요 : ";
@@ -112,7 +111,7 @@ int main(void) {
 					for(int k =0;k<num;k++){													
 						if( 0 == list[k].compare(productList[i][j]) ){
 							++cnt[i]; 
-							sortProductList->addSortProductList(list[k],i,j);
+							sortedProductList->addSortedProductList(list[k],i,j);
 						}
 					}
 				
@@ -124,7 +123,7 @@ int main(void) {
 				for(int k =0;k<num;k++){													
 					if( 0 == list[k].compare(productList[i][j]) ){
 						++cnt[i]; 
-						sortProductList->addSortProductList(list[k],i,j);
+						sortedProductList->addSortedProductList(list[k],i,j);
 					}
 				}
 		}
@@ -137,7 +136,7 @@ int main(void) {
 	cout<<endl;
 	
 	cout<<"<장 볼 순서>"<<endl;
-	sortProductList->show();
+	sortedProductList->show();
 
 	return 0;
 }
