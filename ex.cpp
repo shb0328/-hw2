@@ -32,7 +32,7 @@ class SortedProductList {
 
 						void show(){ //test function
 							cout<<"*product : "<<product<<endl;
-							cout<<"*line : "<<row<<endl;
+							cout<<"*line : "<<row+1<<endl;
 							cout<<"*location : "<<location<<endl<<endl;
 						}
 				};
