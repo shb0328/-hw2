@@ -133,10 +133,10 @@ public:
 		}	
 	}
 	ChainNode<T> * Get(int i) {		//7
-		ChainIterator ptr(first);
+		ChainNode<T> * ptr;
 		int cnt=0;
-		for(;cnt<i;cnt++)
-				ptr++;
+		for(ptr=first;cnt<i;cnt++)
+				ptr=ptr->link;
 
 		return ptr;
 	}
@@ -251,7 +251,9 @@ int main(void) {
 	//7
 	cout<<myChain.Front()->getData()<<endl;
 	//8
+	cout<<myChain.Back()->getData()<<endl;
 	//9
+	cout<<myChain.Get(2)->getData()<<endl;
 	//10
 	//11
 	//12
