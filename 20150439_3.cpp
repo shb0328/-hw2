@@ -255,10 +255,13 @@ int main(void) {
 	//9
 	cout<<myChain.Get(2)->getData()<<endl;
 	//10
-
+	myChain.prePop();
 	//11
+	myChain.show();
 	//12
+
 	//13
+
 	//14
 	//15
 	//16
