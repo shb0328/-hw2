@@ -164,7 +164,13 @@ public:
 		delete Get(i-1)->link;
 		Get(i-1)->link = tmp;
 	}
-
+	void show() {
+		ChainIterator ptr(first);
+		for(;ptr !=0;ptr++){
+		cout<<*ptr<<" ";
+		}
+		cout<<endl;
+	}
 
 private:
 	ChainNode<T> *first;
@@ -225,13 +231,17 @@ int main(void) {
 	for(int i = 0;i<length;++i)
 		myChain.postPush(c[i]);
 	//2
-	for(int i = 0;i<length;++i)
-		cout<<myChain.Get(i)->getData()<<" ";
+	myChain.show();
 	//3
-	myChain.prePush(0);
+	ChainNode<int>* newNode0 = new ChainNode<int>(0);
+	myChain.prePush(newNode0);
 	//4
+	myChain.show();
 	//5
+	ChainNode<int>* newNode10 = new ChainNode<int>(10);
+	myChain.postPush(newNode10);
 	//6
+	myChain.show();
 	//7
 	//8
 	//9
@@ -245,3 +255,4 @@ int main(void) {
 	//17
 	return 0;
 }
+
