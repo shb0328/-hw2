@@ -266,7 +266,10 @@ int main(void) {
 	//13
 	myChain.show();
 	//14
+	ChainNode<int>* newNode100 = new ChainNode<int>(100);
+	myChain.iPush(2,newNode100);
 	//15
+	myChain.show();
 	//16
 	//17
 	return 0;
