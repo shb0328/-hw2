@@ -87,16 +87,15 @@ public:
 	Chain() {				//1
 		first = 0;	
 	}
-	//TODO
-	~Chain() { 				//2
-		if(first){
-			for(ChainNode<T> *ptr = first; ptr->link !=0;){
-				ChainNode<T> *tmp = ptr->link;
-				delete ptr;
-				ptr = tmp;
-			} 
-		}
-	}
+	// ~Chain() { 				//2
+	// 	if(first){
+	// 		for(ChainNode<T> *ptr = first; ptr->link !=0;){
+	// 			ChainNode<T> *tmp = ptr->link;
+	// 			delete ptr;
+	// 			ptr = tmp;
+	// 		} 
+	// 	}
+	// }
 	void prePush(ChainNode<T>* newNode){		//3
 		if(first){
 			ChainNode<T> *tmp = first;
@@ -178,7 +177,6 @@ public:
 		for(;ptr !=0;ptr++){
 		cout<<*ptr<<" ";
 		}
-		cout<<endl;
 	}
 
 private:
@@ -200,19 +198,6 @@ private:
 			ChainIterator operator++(int) {
 				ChainIterator old = *this;
 				current = current->link;
-				return old;
-			}
-			ChainIterator& operator--() {
-				for(ChainNode<T> * ptr = first;ptr = this;ptr = ptr->link)
-					current = ptr;
-				
-				return *this;
-			}
-			ChainIterator operator--(int) {
-				ChainIterator old = *this;
-				for(ChainNode<T> * ptr = first;ptr = this;ptr = ptr->link)
-					current = ptr;
-				
 				return old;
 			}
 
@@ -237,21 +222,24 @@ int main(void) {
 	int length = sizeof(c)/sizeof(c[0]);
 	for(int i =0; i<length; ++i)
 		c[i] = new ChainNode<int>(i+1);
-	
+
 	for(int i = 0;i<length;++i)
 		myChain.postPush(c[i]);
 	//2
 	myChain.show();
+			cout<<endl;
 	//3
 	ChainNode<int>* newNode0 = new ChainNode<int>(0);
 	myChain.prePush(newNode0);
 	//4
 	myChain.show();
+			cout<<endl;
 	//5
 	ChainNode<int>* newNode10 = new ChainNode<int>(10);
 	myChain.postPush(newNode10);
 	//6
 	myChain.show();
+			cout<<endl;
 	//7
 	cout<<myChain.Front()->getData()<<endl;
 	//8
@@ -262,15 +250,18 @@ int main(void) {
 	myChain.prePop();
 	//11
 	myChain.show();
+			cout<<endl;
 	//12
 	myChain.postPop();
 	//13
 	myChain.show();
+			cout<<endl;
 	//14
 	ChainNode<int>* newNode100 = new ChainNode<int>(100);
 	myChain.iPush(2,newNode100);
 	//15
 	myChain.show();
+			cout<<endl;
 	//16
 	myChain.iPop(6);
 	//17
