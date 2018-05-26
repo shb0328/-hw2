@@ -116,7 +116,7 @@ public:
 		}
 	}
 	ChainNode<T> * Front() {		//5
-		if(first = 0)
+		if(first == 0)
 			cout<<"빈 체인 입니다."<<endl;
 
 		return first;
@@ -249,6 +249,7 @@ int main(void) {
 	//6
 	myChain.show();
 	//7
+	cout<<myChain.Front()->getData()<<endl;
 	//8
 	//9
 	//10
