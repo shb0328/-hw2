@@ -87,15 +87,15 @@ public:
 	Chain() {				//1
 		first = 0;	
 	}
-	// ~Chain() { 				//2
-	// 	if(first){
-	// 		for(ChainNode<T> *ptr = first; ptr->link !=0;){
-	// 			ChainNode<T> *tmp = ptr->link;
-	// 			delete ptr;
-	// 			ptr = tmp;
-	// 		} 
-	// 	}
-	// }
+	~Chain() { 				//2
+		if(first){
+			for(ChainNode<T> *ptr = first; ptr->link !=0;){
+				ChainNode<T> *tmp = ptr->link;
+				delete ptr;
+				ptr = tmp;
+			} 
+		}
+	}
 	void prePush(ChainNode<T>* newNode){		//3
 		if(first){
 			ChainNode<T> *tmp = first;
