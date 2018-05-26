@@ -133,10 +133,10 @@ public:
 		}	
 	}
 	ChainNode<T> * Get(int i) {		//7
-		ChainNode<T> *ptr;
+		ChainIterator ptr(first);
 		int cnt=0;
-		for(ptr = first;cnt<i;cnt++)
-				ptr = ptr->link;
+		for(;cnt<i;cnt++)
+				ptr++;
 
 		return ptr;
 	}
@@ -146,12 +146,18 @@ public:
 			delete first;
 			first = tmp;
 		}
+		else {
+			cout<<"빈 체인 입니다."<<endl;
+		}
 	}	
 	void postPop() {				//9
 		if(first){
 			ChainNode<T> *tmp = Back()--;
 			delete tmp->link;
 			tmp->link = 0;
+		}
+		else {
+			cout<<"빈 체인 입니다."<<endl;
 		}
 	}
 	void iPush(int i,ChainNode<T> *newNode) {				//10
