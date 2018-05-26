@@ -152,7 +152,10 @@ public:
 	}	
 	void postPop() {				//9
 		if(first){
-			ChainNode<T> *tmp = Back()--;
+			ChainNode<T> *tmp;
+			for(ChainNode<T> *ptr = first;ptr->link !=0;ptr = ptr->link)
+				tmp = ptr;
+
 			delete tmp->link;
 			tmp->link = 0;
 		}
@@ -259,9 +262,9 @@ int main(void) {
 	//11
 	myChain.show();
 	//12
-
+	myChain.postPop();
 	//13
-
+	myChain.show();
 	//14
 	//15
 	//16
