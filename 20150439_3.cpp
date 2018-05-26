@@ -170,7 +170,7 @@ public:
 	}
 	void iPop(int i) {				//11
 		ChainNode<T> *tmp = Get(i)->link;
-		delete Get(i-1)->link;
+		delete Get(i);
 		Get(i-1)->link = tmp;
 	}
 	void show() {
@@ -237,6 +237,7 @@ int main(void) {
 	int length = sizeof(c)/sizeof(c[0]);
 	for(int i =0; i<length; ++i)
 		c[i] = new ChainNode<int>(i+1);
+	
 	for(int i = 0;i<length;++i)
 		myChain.postPush(c[i]);
 	//2
@@ -271,7 +272,9 @@ int main(void) {
 	//15
 	myChain.show();
 	//16
+	myChain.iPop(6);
 	//17
+	myChain.show();
 	return 0;
 }
 
